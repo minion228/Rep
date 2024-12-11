@@ -78,7 +78,7 @@ namespace ConsoleApp2
 
                     case "4":
                         Console.WriteLine("Выход из программы");
-                        break;
+                        return;
                 }
             }
             else
@@ -87,7 +87,7 @@ namespace ConsoleApp2
                 Menu();
             }
 
-            Menu();
+
         }
     }
 }
