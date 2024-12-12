@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Security.Principal;
 namespace ConsoleApp2
 {
     class Program
     {
-        static int balance = 0;
+        static Account account = new Account();
         static void Main()
         {
             Console.WriteLine("Добро пожаловать!\nВыберите номер действия:");
@@ -23,13 +24,13 @@ namespace ConsoleApp2
                 {
                     case "1":
                         Console.WriteLine("Вы выбрали: Проверить баланс");
-                        Console.WriteLine($"Ваш баланс: {balance}");
+                        account.PrintBalance();
                         Menu();
                         break;
 
                     case "2":
                         Console.WriteLine("Вы выбрали: Снять деньги");
-                        if (balance == 0)
+                        if (account.balance == 0)
                         {
                             Console.WriteLine("Недостаточно средств");
                             Menu();
@@ -41,10 +42,10 @@ namespace ConsoleApp2
                             int intwithdraw;
                             if (int.TryParse(withdraw, out intwithdraw) && intwithdraw > 0)
                             {
-                                if (intwithdraw <= balance)
+                                if (intwithdraw <= account.balance)
                                 {
-                                    balance = balance - intwithdraw;
-                                    Console.WriteLine($"Ваш баланс: {balance}");
+                                    account.balance = account.balance - intwithdraw;
+                                    account.PrintBalance();
                                 }
                                 else
                                 {
@@ -66,8 +67,8 @@ namespace ConsoleApp2
                         int intdeposit;
                         if (int.TryParse(deposit, out intdeposit) && intdeposit > 0)
                         {
-                            balance = balance + intdeposit;
-                            Console.WriteLine($"Ваш баланс: {balance}");
+                            account.balance = account.balance + intdeposit;
+                            account.PrintBalance();
                         }
                         else
                         {
@@ -77,7 +78,6 @@ namespace ConsoleApp2
                         break;
 
                     case "4":
-                        Console.WriteLine("Выход из программы");
                         return;
                 }
             }
@@ -86,13 +86,15 @@ namespace ConsoleApp2
                 Console.WriteLine("Ошибка: Введите число от 1 до 4");
                 Menu();
             }
-
-
         }
     }
-}
+    class Account
+    {
+        public int balance = 0;
 
-
-        
-
-              
+        public void PrintBalance()
+        {
+            Console.WriteLine($"Ваш баланс: {balance}");
+        }
+    }
+}        
